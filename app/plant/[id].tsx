@@ -1,14 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import {
+  Link,
+  useLocalSearchParams,
+  usePathname,
+  useRootNavigationState,
+  useRouter,
+} from 'expo-router';
 
 const ProductPage = () => {
-  const { product } = useLocalSearchParams();
+  const { routes } = useRootNavigationState();
+  const id = routes[routes.length - 1].params.id;
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
+      <Link href='/'>
+        <Text>Go Back</Text>
+      </Link>
       <Text style={styles.title}>Product Page</Text>
-      <Text style={styles.productName}>Product: {product}</Text>
+      <Text style={styles.productName}>Product: {id}</Text>
     </View>
   );
 };

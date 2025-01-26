@@ -1,46 +1,95 @@
-import { Plants } from '@/utils/dummyData';
-import { Text, View, Image, ScrollView } from 'react-native';
-import { Link } from 'expo-router';
-import { useState } from 'react';
+import { Plants } from '@/utils/plantsData';
+import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { styles } from './index.css';
+import { useGlobalStyles } from '@/hooks/useGlobalStyles';
+import { Plant } from '@/constants/Types';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
+
+const filters = ['All', 'Outdoor', 'Indoor'];
 
 export default function App() {
   const [plants, setPlants] = useState(Plants);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const isDarkMode = colorScheme === 'dark';
+  const { mainColor, text, textMuted, borderRadius } = useGlobalStyles();
+
+  const navigateToPlant = (plantId: number) => {
+    // Navigate to the plant details page
+    console.log('Navigating to plant with ID:', plantId);
+    router.push(`/plant/${plantId}`);
+  };
+
+  const renderPlant = (plant: Plant) => (
+    <View
+      key={plant.id}
+      style={styles.item}
+      onTouchEnd={() => navigateToPlant(plant.id)}
+    >
+      <Image
+        source={{ uri: plant.image }}
+        style={[styles.image, borderRadius]}
+      />
+      <Text style={[styles.name, text]}>{plant.name}</Text>
+      <Text style={[styles.category, textMuted]}>{plant.category}</Text>
+      <Text style={[styles.price, mainColor]}>{`$ ${plant.price}`}</Text>
+    </View>
+  );
+
+  useEffect(() => {
+    if (selectedFilter === 'All') {
+      setPlants(Plants);
+    } else {
+      const filteredPlants = Plants.filter(
+        (plant) => plant.category === selectedFilter
+      );
+      setPlants(filteredPlants);
+    }
+  }, [selectedFilter]);
 
   return (
     <View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 10,
-        }}
-      >
-        <Text>Plants</Text>
+      <View style={styles.header}>
+        <Text style={[styles.headerText, text]}>Plants</Text>
         <Link href='/cart'>
-          <Text>Cart </Text>
+          <Text style={[styles.headerText, text]}>Cart </Text>
         </Link>
       </View>
-      <ScrollView
-        style={{
-          padding: 10,
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          gap: 10,
-        }}
-      >
-        {plants.map((item) => (
-          <View key={item.id}>
-            <Text>{item.name}</Text>
-            <Image
-              source={{
-                uri: item.image,
-              }}
-              style={{ width: 100, height: 100 }}
-            />
-          </View>
+      <View style={styles.filtersContainer}>
+        {filters.map((filter) => (
+          <TouchableOpacity
+            key={filter}
+            onPress={() => setSelectedFilter(filter)}
+          >
+            <Text
+              style={[
+                textMuted,
+                styles.filter,
+                borderRadius,
+                {
+                  backgroundColor:
+                    filter === selectedFilter ? Colors.main : 'unset',
+                  color:
+                    filter === selectedFilter
+                      ? Colors.dark.text
+                      : isDarkMode
+                      ? Colors.dark.textMuted
+                      : Colors.light.textMuted,
+                },
+              ]}
+            >
+              {filter}
+            </Text>
+          </TouchableOpacity>
         ))}
+      </View>
+      <ScrollView contentContainerStyle={[styles.scrollContainer]}>
+        {plants.map(renderPlant)}
       </ScrollView>
     </View>
   );
