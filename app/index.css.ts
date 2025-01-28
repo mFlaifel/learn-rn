@@ -1,7 +1,13 @@
 import { Colors } from '@/constants/Colors';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, useColorScheme } from 'react-native';
 
+const screenWidth = Dimensions.get('window').width;
+
+const isDark = false;
 export const styles = StyleSheet.create({
+  background: {
+    backgroundColor: isDark ? Colors.dark.background : Colors.light.background,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -16,6 +22,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    paddingBottom: 80,
   },
   item: {
     width: '48%',
@@ -36,15 +43,21 @@ export const styles = StyleSheet.create({
   image: {
     width: '100%',
     borderRadius: 10,
-    height: 100,
+    height: 0.45 * screenWidth,
     marginTop: 10,
   },
   button: {},
-  filtersContainer: { flexDirection: 'row', gap: 10, padding: 10 },
+  filtersContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    padding: 10,
+  },
   filter: {
     fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: 4,
+    paddingHorizontal: 4,
+    textAlign: 'center',
+    minWidth: 85,
   },
 });
 

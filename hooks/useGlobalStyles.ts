@@ -6,6 +6,8 @@ export const useGlobalStyles = () => {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
 
+  console.log('isDarkMode', isDarkMode);
+
   return StyleSheet.create({
     borderRadius: { borderRadius: 8 },
     mainColor: {

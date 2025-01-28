@@ -10,7 +10,7 @@ export const Colors = {
   main: '#0B845C',
   light: {
     main: '#0B845C',
-    text: '#11181C',
+    text: 'black',
     textMuted: '#333',
     background: '#fff',
     tint: tintColorLight,

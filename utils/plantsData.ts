@@ -93,8 +93,28 @@ export const Plants = [
   },
   {
     id: 10,
-    name: 'Rubber Plant',
+    name: 'Adam Plant',
     category: 'Indoor',
+    description: 'A stunning plant with shiny, dark green leaves.',
+    price: 280,
+    quantity: 7,
+    image:
+      'https://gardeningsoul.com/wp-content/uploads/2017/05/fern-square-2.jpg',
+  },
+  {
+    id: 11,
+    name: 'Adam Plant',
+    category: 'Indoor',
+    description: 'A stunning plant with shiny, dark green leaves.',
+    price: 280,
+    quantity: 7,
+    image:
+      'https://th.bing.com/th?id=OIF.kyICEnRXQ9K1r8DH6%2bI3vA&rs=1&pid=ImgDetMain',
+  },
+  {
+    id: 12,
+    name: 'Eve Plant',
+    category: 'Outdoor',
     description: 'A stunning plant with shiny, dark green leaves.',
     price: 280,
     quantity: 7,
