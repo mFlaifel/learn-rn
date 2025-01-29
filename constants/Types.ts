@@ -5,6 +5,13 @@ export interface Plant {
   description: string;
   price: number;
   quantity: number;
+  careMethod: string;
+  rating: number;
+  reviews: {
+    name: string;
+    avatar: string;
+    review: string;
+  }[];
   image: string;
 }
 

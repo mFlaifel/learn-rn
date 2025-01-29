@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { AppColors } from '@/constants/AppColors';
 import { useColorScheme } from 'react-native';
 
 export const useGlobalStyles = () => {
@@ -11,18 +11,18 @@ export const useGlobalStyles = () => {
   return StyleSheet.create({
     borderRadius: { borderRadius: 8 },
     mainColor: {
-      color: isDarkMode ? Colors.dark.main : Colors.light.main,
+      color: isDarkMode ? AppColors.dark.main : AppColors.light.main,
     },
     text: {
-      color: isDarkMode ? Colors.dark.text : Colors.light.text,
+      color: isDarkMode ? AppColors.dark.text : AppColors.light.text,
     },
     textMuted: {
-      color: isDarkMode ? Colors.dark.textMuted : Colors.light.textMuted,
+      color: isDarkMode ? AppColors.dark.textMuted : AppColors.light.textMuted,
     },
     background: {
       backgroundColor: isDarkMode
-        ? Colors.dark.background
-        : Colors.light.background,
+        ? AppColors.dark.background
+        : AppColors.light.background,
     },
     // Add other global styles as needed
   });

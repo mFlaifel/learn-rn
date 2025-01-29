@@ -1,20 +1,12 @@
 import { Plants } from '@/utils/plantsData';
-import {
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { styles } from './index.css';
 import { useGlobalStyles } from '@/hooks/useGlobalStyles';
 import { Plant } from '@/constants/Types';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
-import { useTheme } from '../context/ThemeContext';
+import { CustomTabFilter } from '@/components/Tabs';
 
 const filters = ['All', 'Outdoor', 'Indoor'];
 
@@ -73,34 +65,11 @@ function Home() {
           </Link>
         </View>
       </View>
-      <View style={styles.filtersContainer}>
-        {filters.map((filter) => (
-          <TouchableOpacity
-            key={filter}
-            onPress={() => setSelectedFilter(filter)}
-          >
-            <Text
-              style={[
-                textMuted,
-                styles.filter,
-                borderRadius,
-                {
-                  backgroundColor:
-                    filter === selectedFilter ? Colors.main : 'transparent',
-                  color:
-                    filter === selectedFilter
-                      ? Colors.dark.text
-                      : isDarkMode
-                      ? Colors.dark.textMuted
-                      : Colors.light.textMuted,
-                },
-              ]}
-            >
-              {filter}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <CustomTabFilter
+        filters={filters}
+        setSelectedFilter={setSelectedFilter}
+        selectedFilter={selectedFilter}
+      />
       <ScrollView contentContainerStyle={[styles.scrollContainer]}>
         {plants.map(renderPlant)}
       </ScrollView>

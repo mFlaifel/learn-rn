@@ -1,4 +1,4 @@
-import { Colors } from '@/constants/Colors';
+import { AppColors } from '@/constants/AppColors';
 import { Dimensions, StyleSheet, useColorScheme } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
@@ -6,7 +6,9 @@ const screenWidth = Dimensions.get('window').width;
 const isDark = false;
 export const styles = StyleSheet.create({
   background: {
-    backgroundColor: isDark ? Colors.dark.background : Colors.light.background,
+    backgroundColor: isDark
+      ? AppColors.dark.background
+      : AppColors.light.background,
   },
   header: {
     flexDirection: 'row',
@@ -22,7 +24,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingBottom: 80,
+    paddingBottom: 200,
   },
   item: {
     width: '48%',
@@ -47,18 +49,6 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {},
-  filtersContainer: {
-    flexDirection: 'row',
-    gap: 10,
-    padding: 10,
-  },
-  filter: {
-    fontSize: 16,
-    paddingVertical: 4,
-    paddingHorizontal: 4,
-    textAlign: 'center',
-    minWidth: 85,
-  },
 });
 
 export default styles;
