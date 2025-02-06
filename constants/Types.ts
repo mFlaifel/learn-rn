@@ -15,4 +15,8 @@ export interface Plant {
   image: string;
 }
 
+export interface CartItem extends Plant {
+  quantity: number;
+}
+
 export type Filter = 'All' | 'Indoor' | 'Outdoor';

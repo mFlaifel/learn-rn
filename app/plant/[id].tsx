@@ -15,6 +15,11 @@ import CustomButton from '@/components/CustomButton';
 import ReviewCard from '@/components/ReviewCard';
 import { CustomTabFilter } from '@/components/Tabs';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useCartContext } from '@/context/CartContext';
+import { CartItem } from '@/constants/Types';
+
+import { styles } from './index.css';
+import { QuantityCounter } from '@/components/QuantityCounter';
 
 const ProductPage = () => {
   const { routes } = useRootNavigationState();
@@ -25,6 +30,7 @@ const ProductPage = () => {
   const [tab, setTab] = React.useState<string>('description');
 
   const [quantity, setQuantity] = React.useState(1);
+  const { addToCart, removeFromCart } = useCartContext();
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -39,6 +45,11 @@ const ProductPage = () => {
 
   const handleReviewPress = () => {
     setTab('reviews');
+  };
+
+  const handleAddToCart = () => {
+    const item = { ...plant, quantity } as CartItem;
+    addToCart(item);
   };
 
   const renderReview = (
@@ -90,28 +101,11 @@ const ProductPage = () => {
           }}
         >
           <Text style={[styles.price, text]}> ${plant.price}</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <CustomButton
-              onPress={increaseQuantity}
-              style={styles.button}
-              textStyle={styles.buttonText}
-              text='+'
-            />
-            <Text style={[styles.quantityText, text]}>{quantity}</Text>
-            <CustomButton
-              onPress={decreaseQuantity}
-              style={styles.button}
-              textStyle={styles.buttonText}
-              text='-'
-            />
-          </View>
+          <QuantityCounter
+            increaseQuantity={increaseQuantity}
+            decreaseQuantity={decreaseQuantity}
+            quantity={quantity}
+          />
         </View>
         <ReviewCard plantData={plant} onPress={handleReviewPress} />
 
@@ -144,83 +138,12 @@ const ProductPage = () => {
       </View>
 
       <CustomButton
-        onPress={() => console.log('Added to cart')}
+        onPress={handleAddToCart}
         text='Add to Cart'
         style={[borderRadius, styles.addToCartButton, text]}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: Dimensions.get('window').height * 0.4,
-  },
-  container: {
-    height: Dimensions.get('window').height,
-  },
-  detailsContainer: {
-    top: -25,
-    left: 0,
-    right: 0,
-    paddingTop: 25,
-    padding: 10,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    gap: 20,
-    zIndex: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  productName: {
-    fontSize: 18,
-    marginTop: 10,
-  },
-  description: {
-    fontSize: 16,
-    marginTop: 10,
-  },
-  price: {
-    fontSize: 18,
-    borderWidth: 1,
-    minWidth: 100,
-  },
-  goBack: {
-    position: 'absolute',
-    left: 10,
-    top: 10,
-    width: 100,
-    height: 40,
-  },
-  quantityText: {
-    textAlign: 'center',
-    minWidth: 30,
-  },
-  button: {
-    borderColor: AppColors.main,
-    borderWidth: 1,
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    paddingBottom: 3,
-  },
-  buttonText: {
-    color: AppColors.main,
-    fontSize: 18,
-  },
-  addToCartButton: {
-    backgroundColor: AppColors.main,
-    height: 50,
-    width: '80%',
-    position: 'absolute',
-    bottom: 60,
-    left: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default ProductPage;

@@ -7,6 +7,7 @@ interface CustomButtonProps {
   style?: object;
   text?: string;
   textStyle?: object;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -14,15 +15,26 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   style,
   text = '',
   textStyle,
+  disabled = false,
 }) => {
   const { text: textGlobalStyle } = useGlobalStyles();
   return (
     <TouchableOpacity
-      style={[styles.button, style]}
+      style={[styles.button, style, disabled && styles.disabledButton]}
       onPress={onPress}
       activeOpacity={0.7}
+      disabled={disabled}
     >
-      <Text style={[styles.text, textGlobalStyle, textStyle]}>{text}</Text>
+      <Text
+        style={[
+          styles.text,
+          textGlobalStyle,
+          textStyle,
+          disabled && styles.disabledText,
+        ]}
+      >
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -34,10 +46,17 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderLeftColor: 'red',
   },
+  disabledButton: {
+    borderColor: '#a9a9a9',
+    // backgroundColor: '#d3d3d3',
+  },
   text: {
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  disabledText: {
+    color: '#a9a9a9',
   },
 });
 

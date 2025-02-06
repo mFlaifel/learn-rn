@@ -22,7 +22,6 @@ function Home() {
     useGlobalStyles();
 
   const navigateToPlant = (plantId: number) => {
-    // Navigate to the plant details page
     console.log('Navigating to plant with ID:', plantId);
     router.push(`/plant/${plantId}`);
   };
@@ -59,7 +58,6 @@ function Home() {
       <View style={styles.header}>
         <Text style={[styles.headerText, text]}>Plants</Text>
         <View>
-          {/* <Button title='Toggle Theme' onPress={toggleTheme} /> */}
           <Link href='/cart'>
             <Text style={[styles.headerText, text]}>Cart </Text>
           </Link>
